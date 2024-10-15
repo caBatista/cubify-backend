@@ -5,6 +5,8 @@ import com.cubify.dto.SolveResponse;
 import com.cubify.model.Solve;
 import com.cubify.repository.SolveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,5 +25,11 @@ public class SolveService {
 		solveRepository.save(solve);
 		
 		return new SolveResponse(solve);
+	}
+	
+	public Page<SolveResponse> findAll(Pageable pageable) {
+		var solves = solveRepository.findAll(pageable);
+		
+		return solves.map(SolveResponse :: new);
 	}
 }
